@@ -1,0 +1,72 @@
+[
+  {
+    "position_id": "pos01",
+    "document_id": "aiayn",
+    "page": 1,
+    "offset": 1364,
+    "anchor": "lation task, our model establishes a new single-model state-"
+  },
+  {
+    "position_id": "pos02",
+    "document_id": "aiayn",
+    "page": 2,
+    "offset": 2124,
+    "anchor": "uilding block, computing hidden representations in parallel "
+  },
+  {
+    "position_id": "pos03",
+    "document_id": "aiayn",
+    "page": 3,
+    "offset": 918,
+    "anchor": "sion dmodel = 512. decoder: the decoder is also composed of "
+  },
+  {
+    "position_id": "pos04",
+    "document_id": "aiayn",
+    "page": 4,
+    "offset": 1312,
+    "anchor": "ntion is much faster and more space-efficient in practice, s"
+  },
+  {
+    "position_id": "pos05",
+    "document_id": "aiayn",
+    "page": 5,
+    "offset": 1502,
+    "anchor": "the decoder up to and including that position. we need to pr"
+  },
+  {
+    "position_id": "pos06",
+    "document_id": "nd13",
+    "page": 1,
+    "offset": 558,
+    "anchor": " định bảo vệ dữ liệu cá nhân. chương i những quy định chung "
+  },
+  {
+    "position_id": "pos07",
+    "document_id": "nd13",
+    "page": 2,
+    "offset": 855,
+    "anchor": " ảnh của cá nhân; g) số điện thoại, số chứng minh nhân dân, "
+  },
+  {
+    "position_id": "pos08",
+    "document_id": "nd13",
+    "page": 3,
+    "offset": 1057,
+    "anchor": "iện, ngăn chặn, xử lý hành vi vi phạm liên quan đến dữ liệu "
+  },
+  {
+    "position_id": "pos09",
+    "document_id": "nd13",
+    "page": 4,
+    "offset": 1026,
+    "anchor": " với mục đích đã được chủ thể dữ liệu đồng ý; b) xử lý dữ li"
+  },
+  {
+    "position_id": "pos10",
+    "document_id": "nd13",
+    "page": 5,
+    "offset": 958,
+    "anchor": "ệ dữ liệu cá nhân. nội dung quản lý nhà nước về bảo vệ dữ li"
+  }
+]

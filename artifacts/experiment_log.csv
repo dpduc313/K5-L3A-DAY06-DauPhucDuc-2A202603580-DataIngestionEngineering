@@ -1,4 +1,4 @@
 strategy,chunking,chunk_size,overlap,metadata,filter,vectorizer,hypothesis,dev_hit1,dev_hit3,test_hit1,test_hit3,notes
-A,,,,,,,,,,,,
-B,,,,,,,,,,,,
-C,,,,,,,,,,,,
+A,"fixed (Perrier split_text, theo trang)",1500 ký tự,200 ký tự,"document_id, source, page, chapters, sections, language, document_type",không,"embeddinggemma-2 (Ollama, 768 chiều, cosine, exact)","Cắt cố định dễ tách evidence và trộn nhiều Điều trong một chunk, nên Evidence Hit@3 thấp hơn B",10/15,14/15,2/5,4/5,"88 chunk, trung vị 1197 ký tự; q17 (dev) và q04 (test) trượt vì evidence bị cắt qua hai chunk hoặc chunk lân cận được xếp cao hơn"
+B,"heading (Perrier HybridChunker, ≤384 token, không vắt trang)",≤384 token,0,giống A,không,giống A,"Chunk theo Chương/Mục/Điều giữ trọn ý, tăng Evidence Hit@3 và coherence",10/15,15/15,5/5,5/5,"129 chunk, trung vị 642 ký tự; heading OCR được chuẩn hóa thành Markdown trước khi chunk (promote_headings)"
+C,giống B,≤384 token,0,giống A,"chapter (cho trước trong câu hỏi; khớp khi chunk trải qua chương đó)",giống A,"Chỉ thêm filter cho câu có filter: top-3 tuân thủ phạm vi, không làm hại câu không filter",10/15,15/15,5/5,5/5,"Khác B duy nhất ở filter; tuân thủ filter dev 3/3 (B 2/3), test 2/2 (B 1/2). Chiến lược được chọn"

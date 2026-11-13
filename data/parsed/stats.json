@@ -1,0 +1,28 @@
+{
+  "aiayn": {
+    "parse_seconds": 63.5,
+    "empty_pages": []
+  },
+  "nd13": {
+    "parse_seconds": 1.0,
+    "empty_pages": []
+  },
+  "fixed": {
+    "chunks": 88,
+    "chars_total": 98033,
+    "tokens_total": 27688,
+    "chars_min": 192,
+    "chars_median": 1197.0,
+    "chars_mean": 1114.0,
+    "chars_max": 1500
+  },
+  "heading": {
+    "chunks": 129,
+    "chars_total": 88367,
+    "tokens_total": 25306,
+    "chars_min": 29,
+    "chars_median": 642,
+    "chars_mean": 685.0,
+    "chars_max": 1920
+  }
+}
