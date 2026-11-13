@@ -1,5 +1,9 @@
 # Báo cáo cá nhân — Day 6
 
+- **Họ và tên:** Đậu Phúc Đức · **MSSV:** 2A202603580 · **Lớp:** L3A
+- **Repo bài nộp:** https://github.com/dpduc313/K5-L3A-DAY06-DauPhucDuc-2A202603580-DataIngestionEngineering
+- **Chủ đề:** truy xuất trên văn bản pháp luật và bài báo khoa học — Nghị định 13/2023/NĐ-CP (bản scan, tiếng Việt) và "Attention Is All You Need" (tiếng Anh)
+
 ## Dữ liệu và pipeline
 
 - **Chủ đề, nguồn/quyền, số trang và quy tắc tính trang:** hai tài liệu khác ngôn ngữ và loại văn bản.
