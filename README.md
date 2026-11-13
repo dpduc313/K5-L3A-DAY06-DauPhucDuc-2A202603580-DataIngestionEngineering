@@ -23,7 +23,7 @@ Cần Docker, [Ollama](https://ollama.com) và một bản checkout Perrier có 
 ```
 git clone https://github.com/dpduc313/perrier.git
 cd perrier
-git checkout ad8ae297647ba7648110447e88eb956d5d22f6f0   # commit Perrier mà lab dùng
+git checkout dd09dadb196ee96f074a3dae9fa841ad672a0d98   # commit Perrier mà lab dùng (nhánh docling-chunking)
 uv sync
 ollama pull embeddinggemma-2
 ```
@@ -56,6 +56,33 @@ $PY -m src.summarize_labels      # tổng hợp nhãn thủ công -> results/lab
 (fingerprint SHA-256 của các file chunk). Nạp lại cùng phiên bản không tạo bản trùng: chunk
 có hash không đổi được bỏ qua, chunk đổi thì embed lại, chunk không còn thì bị xóa
 (minh chứng trong [results/index_log.jsonl](results/index_log.jsonl)).
+
+## Demo trên giao diện chat của Perry
+
+Cùng một quy trình nạp → parse → duyệt → index, nhưng thao tác trên giao diện chat của Perry:
+
+```
+$PY -m src.perrier owner     # một lần: tạo tài khoản Owner (chỉ Owner được nạp tài liệu)
+$PY -m src.perrier web       # http://127.0.0.1:7861/
+```
+
+1. Ở sidebar, mục **Documents**, chọn **Reader** (`docling` cho aiayn, `vision` cho nd13 bản
+   scan) và **Chunking Strategy** (`heading` hoặc `fixed`), rồi thả PDF vào **Upload**.
+2. Perry báo ước tính token và chi phí. Bấm **Read for Review**: Perry đọc và chunk tài liệu,
+   **chưa ghi gì vào DB**. Reader `vision` tốn tiền ngay ở bước này; Docling chạy trên CPU,
+   khoảng 6 phút với aiayn.
+3. Khung **Review before indexing** mở phía trên khung chat:
+   - Bảng tóm tắt: số trang, số chunk, độ dài trung vị, số token lớn nhất, trang đọc lỗi,
+     fingerprint.
+   - Chọn từng trang, kể cả trang không ra chunk nào. Ảnh trang nằm cạnh các chunk của trang,
+     đúng như text sẽ được embed.
+4. Bấm **Approve and index** để embed (EmbeddingGemma 2) và ghi vào pgvector, hoặc
+   **Discard** để bỏ, không ghi gì. Sau khi duyệt, có thể hỏi Perry ngay trong khung chat, câu
+   trả lời có trích dẫn trang.
+
+Giao diện ghi vào bảng `documents`/`chunks` của Perrier, những bảng mà chat tìm kiếm, trên
+cùng DB với lab. Benchmark A/B/C dùng bảng `lab_chunks` riêng, nên demo không làm thay đổi
+kết quả benchmark.
 
 ## Chi phí và thời gian (lần chạy 2026-11-13)
 
