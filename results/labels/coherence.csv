@@ -5,7 +5,7 @@ pos02,A,aiayn,2,"uilding block, computing hidden representations in parallel ",a
 pos02,B/C,aiayn,2,"uilding block, computing hidden representations in parallel ",aiayn-heading-0005,2,"Trọn mục 2 Background, có heading."
 pos03,A,aiayn,3,sion dmodel = 512. decoder: the decoder is also composed of ,aiayn-fixed-0008,1,Bắt đầu giữa câu ('is the function implemented…') và kết thúc giữa câu đầu mục 3.2 Attention.
 pos03,B/C,aiayn,3,sion dmodel = 512. decoder: the decoder is also composed of ,aiayn-heading-0008,2,Trọn mục 3.1 Encoder and Decoder Stacks.
-pos04,A,aiayn,4,"ntion is much faster and more space-efficient in practice, s",aiayn-fixed-0010,2,Bắt đầu giữa câu: 'the two are similar…' mất chủ thể (additive vs dot-product); ý chính vẫn hiểu được; lẫn chú thích 4.
+pos04,A,aiayn,4,"ntion is much faster and more space-efficient in practice, s",aiayn-fixed-0010,1,"Bắt đầu giữa câu ('the two are similar…', mất chủ thể additive vs dot-product) do 200 ký tự overlap từ fixed-0009; anchor nằm trong đoạn overlap. Phần sau overlap trọn ý nhưng đoạn đầu làm loãng chunk; lẫn chú thích 4."
 pos04,B/C,aiayn,4,"ntion is much faster and more space-efficient in practice, s",aiayn-heading-0011,2,"Trọn mục 3.2.1 Scaled Dot-Product Attention, có heading."
 pos05,A,aiayn,5,the decoder up to and including that position. we need to pr,aiayn-fixed-0012,1,Bắt đầu giữa từ ('tational cost…'); kết thúc bằng heading 3.3 mồ côi.
 pos05,B/C,aiayn,5,the decoder up to and including that position. we need to pr,aiayn-heading-0014,2,Trọn mục 3.2.3 Applications of Attention.
@@ -13,9 +13,9 @@ pos06,A,nd13,1, định bảo vệ dữ liệu cá nhân. chương i những quy
 pos06,B/C,nd13,1, định bảo vệ dữ liệu cá nhân. chương i những quy định chung ,nd13-heading-0000,2,"Trọn phần căn cứ ban hành, kết thúc đúng chỗ trước Chương I."
 pos07,A,nd13,2," ảnh của cá nhân; g) số điện thoại, số chứng minh nhân dân, ",nd13-fixed-0001,2,"Có tiêu đề Điều 2, khoản 1-4 và danh sách dữ liệu cơ bản đầy đủ đến hết điểm l"
 pos07,B/C,nd13,2," ảnh của cá nhân; g) số điện thoại, số chứng minh nhân dân, ",nd13-heading-0003,1,Có tiêu đề Điều 2 nhưng danh sách khoản 3 bị tách: điểm l nằm ở chunk sau.
-pos08,A,nd13,3,"iện, ngăn chặn, xử lý hành vi vi phạm liên quan đến dữ liệu ",nd13-fixed-0004,1,Cắt giữa từ ('ệu cá nhân là hoạt động…'): mất thuật ngữ được định nghĩa ở khoản 5 (Bảo vệ dữ liệu cá nhân).
+pos08,A,nd13,3,"iện, ngăn chặn, xử lý hành vi vi phạm liên quan đến dữ liệu ",nd13-fixed-0004,0,"Cắt giữa từ ('ệu cá nhân là hoạt động…'): 200 ký tự overlap từ fixed-0003 cắt mất thuật ngữ được định nghĩa ở khoản 5 (Bảo vệ dữ liệu cá nhân), chính là chỗ được chấm. Khoản 5 trọn vẹn ở fixed-0003."
 pos08,B/C,nd13,3,"iện, ngăn chặn, xử lý hành vi vi phạm liên quan đến dữ liệu ",nd13-heading-0006,2,"Bắt đầu đúng khoản 5, các định nghĩa 5-11 trọn vẹn; thiếu tiêu đề Điều 2 trong text (trang sau) nhưng vẫn tự hiểu."
 pos09,A,nd13,4, với mục đích đã được chủ thể dữ liệu đồng ý; b) xử lý dữ li,nd13-fixed-0005,1,Khoản 12-13 trọn vẹn nhưng chunk kết thúc bằng tiêu đề và khoản 1 của Điều 3 (trộn hai Điều).
 pos09,B/C,nd13,4, với mục đích đã được chủ thể dữ liệu đồng ý; b) xử lý dữ li,nd13-heading-0007,2,"Khoản 12-13 trọn vẹn, kết thúc đúng cuối Điều 2."
 pos10,A,nd13,5,ệ dữ liệu cá nhân. nội dung quản lý nhà nước về bảo vệ dữ li,nd13-fixed-0007,1,"Trộn đuôi Điều 3, Điều 4 và đầu Điều 5; danh sách nội dung quản lý nhà nước bị cắt ở khoản 3."
-pos10,B/C,nd13,5,ệ dữ liệu cá nhân. nội dung quản lý nhà nước về bảo vệ dữ li,nd13-heading-0011,2,"Có tiêu đề Điều 5, danh sách bị cắt ở khoản 6 do hết trang nhưng vẫn label đúng các khoản còn lại ở trang sau vào Điều 5"
+pos10,B/C,nd13,5,ệ dữ liệu cá nhân. nội dung quản lý nhà nước về bảo vệ dữ li,nd13-heading-0011,1,"Có tiêu đề Điều 5 nhưng danh sách bị tách ở khoản 6 do hết trang (khoản 7-8 ở heading-0012, trang 6), giống pos07. Metadata gán đúng heading-0012 vào Điều 5 nhưng text chunk này không giữ trọn danh sách."

@@ -25,7 +25,8 @@ def main() -> None:
         "động (text chunk có nằm trên trang ghi trong metadata, tiêu đề xuất hiện trong chunk "
         "có nằm trong `sections`), tác giả đồng ý. Coherence và grounding do Claude (LLM, qua "
         "Claude Code) chấm nháp theo thang và quy tắc ghi trong báo cáo, có lý do từng dòng; "
-        "tác giả duyệt lại từng dòng và sửa 3 điểm coherence (pos04 A, pos08 A, pos10 B/C).",
+        "tác giả duyệt lại từng dòng, giữ nguyên điểm và viết lại lý do 3 dòng coherence "
+        "(pos04 A, pos08 A, pos10 B/C).",
         "",
     ]
 
