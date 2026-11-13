@@ -1,16 +1,16 @@
 ﻿qid,strategy,top3_chunk_ids,score_0_1_2,reason
-q04,A,nd13-fixed-0032 nd13-fixed-0031 nd13-fixed-0039,,
-q08,A,nd13-fixed-0016 nd13-fixed-0014 nd13-fixed-0023,,
-q11,A,nd13-fixed-0018 nd13-fixed-0007 nd13-fixed-0009,,
-q16,A,aiayn-fixed-0023 aiayn-fixed-0019 aiayn-fixed-0024,,
-q19,A,aiayn-fixed-0025 aiayn-fixed-0020 aiayn-fixed-0007,,
-q04,B,nd13-heading-0046 nd13-heading-0048 nd13-heading-0057,,
-q08,B,nd13-heading-0025 nd13-heading-0023 nd13-heading-0034,,
-q11,B,nd13-heading-0015 nd13-heading-0027 nd13-heading-0035,,
-q16,B,aiayn-heading-0030 aiayn-heading-0022 aiayn-heading-0029,,
-q19,B,aiayn-heading-0025 aiayn-heading-0004 aiayn-heading-0034,,
-q04,C,nd13-heading-0046 nd13-heading-0048 nd13-heading-0057,,
-q08,C,nd13-heading-0025 nd13-heading-0023 nd13-heading-0034,,
-q11,C,nd13-heading-0015 nd13-heading-0008 nd13-heading-0002,,
-q16,C,aiayn-heading-0030 aiayn-heading-0022 aiayn-heading-0029,,
-q19,C,aiayn-heading-0025 aiayn-heading-0004 aiayn-heading-0034,,
+q04,A,nd13-fixed-0032 nd13-fixed-0031 nd13-fixed-0039,0,Top-3 có Điều 23 khoản 2-6 nhưng không chunk nào có thời hạn 72 giờ hay quy định thông báo muộn (bị cắt sang chunk khác).
+q08,A,nd13-fixed-0016 nd13-fixed-0014 nd13-fixed-0023,2,Hạng 1 (fixed-0016) chứa trọn Điều 12 khoản 2 về hình thức rút lại sự đồng ý; truy nguồn được trang 10.
+q11,A,nd13-fixed-0018 nd13-fixed-0007 nd13-fixed-0009,2,Hạng 3 (fixed-0009) chứa tiêu đề Điều 8 'Hành vi bị nghiêm cấm' và khoản 2; đủ để trả lời.
+q16,A,aiayn-fixed-0023 aiayn-fixed-0019 aiayn-fixed-0024,2,Hạng 1 chứa trọn câu label smoothing ϵls = 0.1 và tác động lên perplexity/BLEU.
+q19,A,aiayn-fixed-0025 aiayn-fixed-0020 aiayn-fixed-0007,2,"Hạng 2 (fixed-0020) chứa trọn câu Adam β1 = 0.9, β2 = 0.98, ϵ = 10^-9."
+q04,B,nd13-heading-0046 nd13-heading-0048 nd13-heading-0057,2,"Hạng 1 chứa trọn khoản 1 Điều 23: 72 giờ, Mẫu số 03 và yêu cầu kèm lý do khi thông báo muộn."
+q08,B,nd13-heading-0025 nd13-heading-0023 nd13-heading-0034,2,"Hạng 1 là trọn Điều 12, có khoản 2 về hình thức rút lại sự đồng ý."
+q11,B,nd13-heading-0015 nd13-heading-0027 nd13-heading-0035,2,"Hạng 1 là trọn Điều 8 Hành vi bị nghiêm cấm, có khoản 2."
+q16,B,aiayn-heading-0030 aiayn-heading-0022 aiayn-heading-0029,2,Hạng 1 (mục 5.4) chứa trọn câu label smoothing và tác động.
+q19,B,aiayn-heading-0025 aiayn-heading-0004 aiayn-heading-0034,2,Hạng 1 là trọn mục 5.3 Optimizer với các tham số Adam.
+q04,C,nd13-heading-0046 nd13-heading-0048 nd13-heading-0057,2,Giống B (câu không có filter): hạng 1 chứa trọn khoản 1 Điều 23.
+q08,C,nd13-heading-0025 nd13-heading-0023 nd13-heading-0034,2,Giống B (câu không có filter): hạng 1 là trọn Điều 12.
+q11,C,nd13-heading-0015 nd13-heading-0008 nd13-heading-0002,2,Hạng 1 là trọn Điều 8; hạng 2-3 cũng thuộc Chương I như filter yêu cầu.
+q16,C,aiayn-heading-0030 aiayn-heading-0022 aiayn-heading-0029,2,Hạng 1 chứa trọn câu label smoothing; cả top-3 thuộc 5 Training.
+q19,C,aiayn-heading-0025 aiayn-heading-0004 aiayn-heading-0034,2,Giống B (câu không có filter): hạng 1 là trọn mục 5.3.

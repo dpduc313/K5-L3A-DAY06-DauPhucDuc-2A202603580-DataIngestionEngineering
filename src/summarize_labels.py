@@ -18,7 +18,16 @@ def rows(name: str) -> list[dict]:
 
 
 def main() -> None:
-    lines = ["# Tổng hợp nhãn thủ công", "", "Người chấm: tác giả bài (nguy cơ thiên lệch).", ""]
+    lines = [
+        "# Tổng hợp nhãn",
+        "",
+        "Người chấm: metadata do tác giả chấm tay; 3 dòng được sửa theo bước đối chiếu tự "
+        "động (text chunk có nằm trên trang ghi trong metadata, tiêu đề xuất hiện trong chunk "
+        "có nằm trong `sections`), tác giả đồng ý. Coherence và grounding do Claude (LLM, qua "
+        "Claude Code) chấm theo thang và quy tắc ghi trong báo cáo, có lý do từng dòng; tác "
+        "giả chịu trách nhiệm xem xét lại.",
+        "",
+    ]
 
     coherence = defaultdict(list)
     missing = 0
