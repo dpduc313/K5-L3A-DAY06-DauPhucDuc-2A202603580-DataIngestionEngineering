@@ -55,15 +55,18 @@ Chi phí chung: OCR nd13 0,1645 USD, dùng cho cả ba chiến lược.
 
 | Strategy | Coherence trung bình /2 (n) | Metadata đủ và đúng (n/N) | Filter tuân thủ (n/N hoặc N/A) | Grounding 0/1/2 (số câu) và trung bình /2 |
 |---|---|---|---|---|
-| A | 1,10 (n=10; 0/1/2 = 1/7/2) | 14/15 | dev 1/3, test 1/2 | 1/0/4 → 1,60 |
-| B | 1,80 (n=10; 0/1/2 = 0/2/8) | 14/15 | dev 2/3, test 1/2 | 0/0/5 → 2,00 |
-| C | 1,80 (chung chunk với B) | 14/15 | dev 3/3, test 2/2 | 0/0/5 → 2,00 |
+| A | 1,30 (n=10; 0/1/2 = 0/7/3) | 14/15 | dev 1/3, test 1/2 | 1/0/4 → 1,60 |
+| B | 1,90 (n=10; 0/1/2 = 0/1/9) | 14/15 | dev 2/3, test 1/2 | 0/0/5 → 2,00 |
+| C | 1,90 (chung chunk với B) | 14/15 | dev 3/3, test 2/2 | 0/0/5 → 2,00 |
 
 **Người chấm và phương pháp:**
-- **Metadata** do tác giả chấm tay trên 45 bản ghi (5 câu test × top-3 × 3 chiến lược). Thêm một bước đối chiếu tự động: text chunk có nằm trên trang ghi trong metadata không, và mọi tiêu đề Điều/mục xuất hiện trong chunk có nằm trong `sections` không. Bước này phát hiện 3 bản ghi tác giả đã chấm đúng nhưng thực ra có lỗi; tác giả đồng ý sửa thành 0:
-  - `nd13-fixed-0039` (A, q04): thiếu Điều 26 dù tiêu đề Điều 26 nằm cuối chunk.
-  - `aiayn-heading-0029` (B và C, q16): Bảng 2, kết quả BLEU thuộc 6.1, bị Docling gán vào `5.4 Regularization` theo vị trí trên trang.
-- **Coherence và grounding** do Claude (LLM, qua Claude Code) chấm, có lý do từng dòng trong CSV. Tác giả thấy hai bảng này khó chấm tay vì phải đối chiếu nhiều chunk dài. Quy tắc coherence: 2 = ý tại vị trí chấm trọn vẹn và chunk bắt đầu đúng ranh giới câu/heading; 1 = ý hiểu được nhưng chunk bắt đầu hoặc kết thúc giữa câu, trộn mục không liên quan, hoặc danh sách bị tách; 0 = chính ý tại vị trí bị cắt mất chủ thể. Grounding chấm theo thang 0–2 của đề trên toàn bộ top-3. Đây là đánh giá bằng LLM, chưa phải nhãn độc lập của con người: có nguy cơ thiên lệch, nhất là khi cùng một hệ thống vừa viết pipeline vừa chấm. Tổng hợp: [results/labels_summary.md](../../results/labels_summary.md).
+- **Metadata** do tác giả chấm tay trên 45 bản ghi (5 câu test × top-3 × 3 chiến lược). Thêm một bước đối chiếu tự động: text chunk có nằm trên trang ghi trong metadata không, và mọi tiêu đề Điều/mục xuất hiện trong chunk có nằm trong `sections` không. Bước này phát hiện 3 bản ghi lỗi mà lần chấm tay bỏ sót, từ 2 chunk (một chunk của B/C được tính ở cả hai chiến lược). Cả 3 được sửa thành 0:
+  - `nd13-fixed-0039` (A, q04; 1 bản ghi): thiếu Điều 26 dù tiêu đề Điều 26 nằm cuối chunk.
+  - `aiayn-heading-0029` (B và C, q16; 2 bản ghi): Bảng 2, kết quả BLEU thuộc 6.1, bị Docling gán vào `5.4 Regularization` theo vị trí trên trang.
+- **Coherence và grounding** do Claude (LLM, qua Claude Code) chấm nháp, có lý do từng dòng trong CSV. Tác giả duyệt lại từng dòng, đối chiếu với text chunk. Tác giả giữ nguyên grounding và sửa 3 điểm coherence:
+  - `pos04` A: 1 → 2.
+  - `pos08` A: 0 → 1.
+  - `pos10` B/C: 1 → 2. Danh sách khoản bị cắt ở cuối trang, nhưng metadata vẫn gán đúng các khoản ở trang sau vào Điều 5. Quy tắc coherence: 2 = ý tại vị trí chấm trọn vẹn và chunk bắt đầu đúng ranh giới câu/heading; 1 = ý hiểu được nhưng chunk bắt đầu hoặc kết thúc giữa câu, trộn mục không liên quan, hoặc danh sách bị tách; 0 = chính ý tại vị trí bị cắt mất chủ thể. Grounding chấm theo thang 0–2 của đề trên toàn bộ top-3. Điểm nháp do LLM, chính hệ thống viết pipeline, đề xuất, nên vẫn có nguy cơ thiên lệch. Cả bộ nhãn chỉ có một người duyệt, chưa có người chấm thứ hai độc lập. Tổng hợp: [results/labels_summary.md](../../results/labels_summary.md).
 
 **Trace, nhãn và cách chọn mẫu:**
 - Trace top-3 đầy đủ (text, score, metadata, hit): `results/A|B|C/trace.jsonl`. Chỉ số: [results/metrics.md](../../results/metrics.md).
@@ -74,9 +77,9 @@ Chi phí chung: OCR nd13 0,1645 USD, dùng cho cả ba chiến lược.
 ## Phân tích và kết luận
 
 - **A–B (đổi cách chunk):** B hơn A 1 câu Evidence Hit@3 trên dev (15 vs 14) và 1 câu trên test (5 vs 4); Hit@1 trên test 5/5 so với 2/5.
-  - Nhãn thủ công cùng chiều: coherence 1,80 so với 1,10. 7/10 chunk A bắt đầu hoặc kết thúc giữa câu hay trộn nhiều Điều/mục; `pos08` bị 0 vì chunk A cắt mất thuật ngữ đang được định nghĩa ("ệu cá nhân là hoạt động…").
+  - Nhãn thủ công cùng chiều: coherence 1,90 so với 1,30. 7/10 chunk A chỉ được 1 điểm vì bắt đầu hoặc kết thúc giữa câu, hay trộn nhiều Điều/mục. Ví dụ ở `pos08`, chunk A cắt mất thuật ngữ đang được định nghĩa ("ệu cá nhân là hoạt động…").
   - Grounding 2,00 so với 1,60: q04 của A bị 0 vì không chunk nào trong top-3 chứa thời hạn 72 giờ.
-  - B cũng có điểm yếu: danh sách bị tách ở ranh giới trang hoặc giới hạn token (`pos07`, `pos10`).
+  - B cũng có điểm yếu: danh sách bị tách ở ranh giới trang hoặc giới hạn token. `pos07` được 1 điểm. `pos10` cũng bị tách ở cuối trang nhưng vẫn được 2, vì metadata gán phần còn lại đúng vào Điều 5.
   - Metadata ngang nhau (14/15), nhưng lỗi khác bản chất: A thiếu một Điều vì chunk cố định vắt qua nhiều Điều; B gán sai mục cho một bảng.
 
   Hai ví dụ sai của A:
@@ -86,7 +89,7 @@ Chi phí chung: OCR nd13 0,1645 USD, dùng cho cả ba chiến lược.
 - **Chiến lược chọn: C.** Đánh đổi: B/C có nhiều chunk hơn A (129 vs 88, nhiều lượt embed hơn) nhưng tổng token ít hơn (25.306 vs 27.688, vì không có overlap) và chunk giữ trọn Điều. Chunk theo heading phụ thuộc vào chất lượng heading: với OCR cần chuẩn hóa heading trước, nếu không B thoái hóa thành chunk gộp nhiều Điều. Điều kiện áp dụng: tài liệu có cấu trúc heading rõ (văn bản pháp luật, bài báo).
 - **Hạn chế:**
   - Test chỉ 5 câu, nên chênh lệch 1 câu đã là 20%; không suy rộng ngoài corpus này.
-  - Coherence và grounding do LLM chấm, metadata do tác giả chấm (nguy cơ thiên lệch, chưa có người chấm thứ hai độc lập); câu hỏi do AI soạn nháp. Lần chấm tay metadata đầu tiên bỏ sót 3 lỗi mà bước đối chiếu tự động tìm ra: chấm tay metadata dễ bỏ sót khi tiêu đề nằm ở cuối chunk.
+  - Coherence và grounding do LLM chấm nháp rồi tác giả duyệt; metadata do tác giả chấm. Chỉ có một người chấm, chưa có người thứ hai độc lập, nên vẫn có nguy cơ thiên lệch. Câu hỏi do AI soạn nháp. Lần chấm tay metadata đầu tiên bỏ sót 3 lỗi mà bước đối chiếu tự động tìm ra: chấm tay metadata dễ bỏ sót khi tiêu đề nằm ở cuối chunk.
   - **Lần chạy dev đầu** báo q15 trượt ở cả ba chiến lược. Nguyên nhân là lỗi so khớp (evidence chép từ Markdown của Docling có `warmup\_steps`, chunk có `warmup_steps`), không phải lỗi truy xuất. Đã sửa `normalize` trước khi chọn chiến lược, áp dụng như nhau cho cả ba; kết quả lần đầu và lần sửa đều ghi trong [results/selection.md](../../results/selection.md).
   - Thời gian đo một lần trên CPU máy cá nhân.
   - Manifest đếm ký tự bằng `normalize` trước lần sửa escape (sai lệch vài ký tự).
@@ -98,4 +101,4 @@ Chi phí chung: OCR nd13 0,1645 USD, dùng cho cả ba chiến lược.
 
 ## Công cụ AI
 
-Dùng Claude Code để viết code pipeline, soạn nháp câu hỏi benchmark và báo cáo, và chấm nhãn coherence và grounding (phương pháp ở mục Kết quả). Tác giả duyệt preview parse/chunk (phát hiện lỗi Điều 31 ở trang 24 trước khi index), duyệt câu hỏi và evidence, và chấm tay nhãn metadata. Mọi số liệu lấy từ các lần chạy thật ghi trong `results/`.
+Dùng Claude Code để viết code pipeline, soạn nháp câu hỏi benchmark và báo cáo, và chấm nháp nhãn coherence và grounding (phương pháp ở mục Kết quả). Tác giả duyệt preview parse/chunk (phát hiện lỗi Điều 31 ở trang 24 trước khi index), duyệt câu hỏi và evidence, chấm tay nhãn metadata, và duyệt lại từng nhãn coherence và grounding. Mọi số liệu lấy từ các lần chạy thật ghi trong `results/`.
