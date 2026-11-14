@@ -96,11 +96,64 @@ Chi phí chung: OCR nd13 0,1645 USD, dùng cho cả ba chiến lược.
   - Thời gian đo một lần trên CPU máy cá nhân.
   - Manifest đếm ký tự bằng `normalize` trước lần sửa escape (sai lệch vài ký tự).
 - **Nếu làm tiếp:**
-  - Thêm hybrid search (dense + full-text) và reranker đa ngữ (`bge-reranker-v2-m3`) của Perrier làm dòng mở rộng.
+  - Thử reranker đa ngữ (`bge-reranker-v2-m3`) của Perrier làm dòng mở rộng (hybrid đã thử ở mục Bonus).
   - Cho Self-query của Perrier tự suy filter rồi so với filter cho trước.
   - Mang heading sang trang sau ngay trong text chunk (hiện mới có trong metadata).
   - Tăng tập test.
 
+## Bonus: hybrid retrieval (dense + BM25) trên corpus 3 tài liệu
+
+- **Corpus:** thêm sách "Deep Learning cơ bản" (Nguyễn Thanh Tuấn, bản 2, 2020; `dlcb`).
+  - Lớp text của PDF mất dấu cách sau chữ có dấu ("mởđầu"), nên text được dựng lại từ khoảng cách giữa các glyph.
+  - Bỏ header chạy, trang bìa của 8 Phần, mục lục và tài liệu tham khảo. Heading nhận theo font.
+  - Kết quả: 273 trang, 504 chunk heading. Chunk lưu với `chunking = 'heading-dlcb'`, nên kết quả chính ở trên không đổi.
+  - Corpus bonus có 633 chunk: chunk B/C của aiayn và nd13, cộng chunk của sách.
+  - Bản quyền: sách chỉ ghi "Copyright © 2019 Nguyễn Thanh Tuấn", không có giấy phép phân phối lại ([data/bonus/manifest.json](../../data/bonus/manifest.json)).
+- **Giữ nguyên chunk và metadata filter, chỉ đổi cách xếp hạng.**
+  - `dense`: baseline, tức chiến lược C.
+  - `bm25`: tách theo âm tiết, k1 = 1,5, b = 0,75.
+  - `hybrid`: weighted RRF `1/(k + hạng dense) + w/(k + hạng BM25)`.
+- **Benchmark:** 20 câu chính cộng 16 câu về sách ([benchmark/bonus_questions.jsonl](../../benchmark/bonus_questions.jsonl)), chia 26 câu dev và 10 câu test.
+  - Tiêu chí chọn tham số được chốt trước khi chạy ([benchmark/bonus_selection_criteria.md](../../benchmark/bonus_selection_criteria.md)).
+  - Lưới 12 cấu hình (N, k, w) chỉ chạy trên dev. Test chạy một lần, sau khi đã ghi [results/bonus/selection.md](../../results/bonus/selection.md).
+
+| Cấu hình | Dev Hit@1 | Dev Hit@3 | Dev MRR@3 | Test Hit@1 | Test Hit@3 | Test MRR@3 |
+|---|---|---|---|---|---|---|
+| dense (baseline C) | 16/26 | 23/26 | 0,744 | 7/10 | 9/10 | 0,783 |
+| bm25 | 19/26 | 23/26 | 0,801 | 6/10 | 7/10 | 0,633 |
+| hybrid N = 20, k = 60, w = 1,0 | 20/26 | 25/26 | 0,865 | 7/10 | 9/10 | 0,767 |
+
+Filter được tuân thủ ở mọi cấu hình (dev 5/5, test 3/3). Chi tiết từng câu nằm trong [results/bonus/metrics.md](../../results/bonus/metrics.md); trace có kèm text chunk.
+
+- **Tuning gần như không có tác dụng:**
+  - Trên dev, k và N không làm đổi hạng của bất kỳ câu nào trong top-3. Chỉ w có tác động: w = 1,0 hơn w = 0,5 đúng một câu Hit@1.
+  - Theo quy tắc phá hòa, cấu hình được chọn là cấu hình mặc định.
+- **Hybrid không hơn dense trên test:**
+  - Trên dev, hybrid thêm 2 câu Hit@3 và 4 câu Hit@1, nhưng kết quả này không lặp lại trên test: Hit@1 và Hit@3 bằng dense, MRR@3 thấp hơn một chút.
+  - Hybrid giúp chủ yếu ở các câu có từ khóa riêng của tài liệu: b06 (R-CNN, real-time) từ hạng 4 lên 1; b05 (padding), b07, b10 (γ, β), b16, q13 và q17 lên hạng 1; q20 từ hạng 4 lên 2.
+- **Các câu hybrid làm xấu hơn dense** (so hạng của chunk đúng đầu tiên):
+  - **q03** (dev, diễn đạt lại): dense hạng 1, BM25 hạng 6, hybrid hạng 2.
+    - Câu hỏi dùng từ khác văn bản, nên BM25 xếp chunk đúng thấp.
+    - Điều 12 "Rút lại sự đồng ý" đứng hạng 3 ở cả hai danh sách, nên được cộng điểm hai lần và vượt lên trên.
+  - **q09** (dev, filter): chunk đúng có hạng (1, 2) và Điều 39 có hạng (2, 1) theo thứ tự (dense, BM25), nên điểm RRF bằng nhau tuyệt đối.
+    - Hòa được phá theo `chunk_id`, nên chunk đúng xuống hạng 2.
+    - Đây là hệ quả của quy tắc phá hòa, không phải tín hiệu từ dữ liệu. Nên phá hòa theo hạng dense.
+  - **b15** (test, câu tiếng Anh về sách tiếng Việt): dense hạng 1, BM25 hạng 18, hybrid hạng 3.
+    - BM25 khớp các từ tiếng Anh sang aiayn và code, rồi kéo chunk bài tập U-Net (dense 3, BM25 5) lên hạng 1.
+  - Điểm chung: khi một bên yếu (diễn đạt lại, khác ngôn ngữ), RRF với trọng số bằng nhau để bên yếu kéo chunk đúng xuống.
+- **Câu trượt ở cả ba cấu hình:**
+  - **b09:** đây là lỗi ingestion, không phải lỗi xếp hạng.
+    - Trong PDF, từ "regres-sion" bị gạch nối ở cuối dòng. Text trang vẫn nối lại được, nhưng chunker của Perrier đổi dấu xuống dòng thành dấu cách, nên chunk chứa "regres- sion" và không khớp evidence nữa.
+    - Chunk chứa evidence (`dlcb-heading-0300`) vẫn đứng hạng 2 ở dense.
+    - Lỗi có ở 14 chỗ trong 13 chunk của sách. Corpus chính không có chỗ nào.
+    - Lỗi được phát hiện sau khi đã chạy test, nên không sửa và không chạy lại. Cách sửa: nối gạch nối cuối dòng ngay khi dựng text trang, trước khi chunk.
+  - **b13:** chunk đúng (trang 285) đứng hạng 5 ở dense và 4 ở BM25. Top-3 bị các chunk đầu chương DCGAN, cũng nói về generator, chiếm hết.
+- **Hạn chế:**
+  - 16 câu về sách do Claude soạn và chưa được người duyệt. Nhiều câu chép gần nguyên văn sách, nên có lợi cho BM25 hơn câu hỏi thật.
+  - Test chỉ có 10 câu, trong đó 5 câu test chính đã từng dùng để đánh giá C.
+  - BM25 tách theo âm tiết, không tách từ ghép tiếng Việt.
+- **Kết luận:** chưa đủ bằng chứng để thay C bằng hybrid. Nếu dùng hybrid, nên giảm trọng số BM25 cho câu hỏi khác ngôn ngữ với tài liệu, và phá hòa theo hạng dense. Cả hai thay đổi này cần thêm câu hỏi để chỉnh, rồi một tập test mới để kiểm tra.
+
 ## Công cụ AI
 
-Dùng Claude Code để viết code pipeline, soạn nháp câu hỏi benchmark và báo cáo, và chấm nháp nhãn coherence và grounding (phương pháp ở mục Kết quả). Tác giả duyệt preview parse/chunk (phát hiện lỗi Điều 31 ở trang 24 trước khi index), duyệt câu hỏi và evidence, chấm tay nhãn metadata, và duyệt lại từng nhãn coherence và grounding. Mọi số liệu lấy từ các lần chạy thật ghi trong `results/`.
+Dùng Claude Code để viết code pipeline, soạn nháp câu hỏi benchmark và báo cáo, và chấm nháp nhãn coherence và grounding (phương pháp ở mục Kết quả). Tác giả duyệt preview parse/chunk (phát hiện lỗi Điều 31 ở trang 24 trước khi index), duyệt câu hỏi và evidence, chấm tay nhãn metadata, và duyệt lại từng nhãn coherence và grounding. Mọi số liệu lấy từ các lần chạy thật ghi trong `results/`. Ở phần Bonus, Claude Code viết code đọc sách và chạy hybrid, soạn 16 câu hỏi về sách (chưa được người duyệt) và viết nháp phân tích.

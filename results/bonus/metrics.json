@@ -1,0 +1,91 @@
+{
+  "_meta": {
+    "embedding_model": "embeddinggemma-2",
+    "query_embedding_seconds": 5.7,
+    "corpus_chunks": 633,
+    "questions": 36,
+    "include_test": true,
+    "bm25": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "dense": {
+    "dev": {
+      "n": 26,
+      "hit1": 16,
+      "hit3": 23,
+      "mrr3": 0.7436,
+      "misses": [
+        "q20",
+        "b06",
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    },
+    "test": {
+      "n": 10,
+      "hit1": 7,
+      "hit3": 9,
+      "mrr3": 0.7833,
+      "misses": [
+        "b13"
+      ],
+      "filter_questions": 3,
+      "filter_compliant": 3
+    }
+  },
+  "bm25": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 23,
+      "mrr3": 0.8013,
+      "misses": [
+        "q03",
+        "q10",
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    },
+    "test": {
+      "n": 10,
+      "hit1": 6,
+      "hit3": 7,
+      "mrr3": 0.6333,
+      "misses": [
+        "b13",
+        "b14",
+        "b15"
+      ],
+      "filter_questions": 3,
+      "filter_compliant": 3
+    }
+  },
+  "hybrid_N20_k60_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    },
+    "test": {
+      "n": 10,
+      "hit1": 7,
+      "hit3": 9,
+      "mrr3": 0.7667,
+      "misses": [
+        "b13"
+      ],
+      "filter_questions": 3,
+      "filter_compliant": 3
+    }
+  }
+}

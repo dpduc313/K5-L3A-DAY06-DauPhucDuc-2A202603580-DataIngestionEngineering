@@ -57,6 +57,22 @@ $PY -m src.summarize_labels      # tổng hợp nhãn thủ công -> results/lab
 có hash không đổi được bỏ qua, chunk đổi thì embed lại, chunk không còn thì bị xóa
 (minh chứng trong [results/index_log.jsonl](results/index_log.jsonl)).
 
+## Bonus: hybrid retrieval trên corpus 3 tài liệu
+
+Thêm sách "Deep Learning cơ bản" (`data/raw/dlcb.pdf`), rồi so sánh dense, BM25 và hybrid (RRF).
+Kết quả và phân tích nằm ở mục Bonus của báo cáo cá nhân.
+
+```
+$PY -m src.bonus parse           # sách -> data/bonus/ (trang, 504 chunk heading, manifest)
+$PY -m src.bonus verify          # evidence của 36 câu (20 chính + 16 về sách) nằm đúng trang gold
+$PY -m src.bonus index           # embed vào lab_chunks với chunking 'heading-dlcb'
+$PY -m src.bonus evaluate        # dev: dense, bm25, 12 cấu hình hybrid -> results/bonus/selection.md
+$PY -m src.bonus evaluate-test   # chạy một lần: dense, bm25, hybrid đã chọn -> results/bonus/metrics.md
+```
+
+Tiêu chí chọn tham số được chốt trước khi chạy: [benchmark/bonus_selection_criteria.md](benchmark/bonus_selection_criteria.md).
+Chunk của sách dùng nhãn riêng, nên `src.evaluate` và các kết quả chính không bị ảnh hưởng.
+
 ## Demo trên giao diện chat của Perry
 
 Cùng một quy trình nạp → parse → duyệt → index, nhưng thao tác trên giao diện chat của Perry:
@@ -83,6 +99,22 @@ $PY -m src.perrier web       # http://127.0.0.1:7861/
 Giao diện ghi vào bảng `documents`/`chunks` của Perrier, những bảng mà chat tìm kiếm, trên
 cùng DB với lab. Benchmark A/B/C dùng bảng `lab_chunks` riêng, nên demo không làm thay đổi
 kết quả benchmark.
+
+**5 chunk kiểm chứng được.** Với `web`, mỗi lần tìm giữ đúng 5 chunk. Trước câu trả lời, chat
+hiện một khối thu gọn "Retrieval N: 5 chunk". Mỗi chunk có citation (`nd13.pdf#page=17`), id
+trong bảng `chunks`, điểm và toàn văn. Để đối chiếu, mở PDF đúng trang hoặc chạy
+`SELECT * FROM chunks WHERE id = …`. Muốn xem riêng bước retrieval, không gọi LLM:
+
+```
+$PY -m src.perrier retrieve "Việc xóa dữ liệu cá nhân phải thực hiện trong bao lâu?"
+```
+
+- Reranker mặc định của Perrier (`ms-marco-MiniLM`, chỉ tiếng Anh) bị tắt cho các lệnh của
+  lab. Trên 20 câu benchmark, Evidence Hit@5 là 17/20 khi bật và 20/20 khi tắt. Đặt
+  `PERRY_RERANK_MODEL` trong `.env` để bật lại.
+- Nạp nd13 qua giao diện có thể thiếu trang nếu vision model đọc lỗi (lần nạp ngày
+  2026-11-13 chỉ còn 21/39 trang). Nạp lại từ OCR cache của lab, không tốn phí:
+  `$PY -m src.perrier ingest-ocr`.
 
 ## Chi phí và thời gian (lần chạy 2026-11-13)
 

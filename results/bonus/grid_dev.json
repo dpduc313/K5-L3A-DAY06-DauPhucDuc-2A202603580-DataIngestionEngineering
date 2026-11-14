@@ -1,0 +1,199 @@
+{
+  "_meta": {
+    "embedding_model": "embeddinggemma-2",
+    "query_embedding_seconds": 4.1,
+    "corpus_chunks": 633,
+    "questions": 26,
+    "include_test": false,
+    "bm25": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "dense": {
+    "dev": {
+      "n": 26,
+      "hit1": 16,
+      "hit3": 23,
+      "mrr3": 0.7436,
+      "misses": [
+        "q20",
+        "b06",
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "bm25": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 23,
+      "mrr3": 0.8013,
+      "misses": [
+        "q03",
+        "q10",
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k10_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k10_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k30_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k30_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k60_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N20_k60_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k10_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k10_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k30_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k30_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k60_w0.5": {
+    "dev": {
+      "n": 26,
+      "hit1": 19,
+      "hit3": 25,
+      "mrr3": 0.8397,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  },
+  "hybrid_N50_k60_w1.0": {
+    "dev": {
+      "n": 26,
+      "hit1": 20,
+      "hit3": 25,
+      "mrr3": 0.8654,
+      "misses": [
+        "b09"
+      ],
+      "filter_questions": 5,
+      "filter_compliant": 5
+    }
+  }
+}
